@@ -15,11 +15,12 @@
   "Engagement_Level": "Medium"
 }
 ## Selección 
-Buscar un post específico
+
 db.posts.find({ Post_ID: "Post_6000" })
 
-Buscar posts de TikTok
+
 { "Platform": "TikTok" }
+
 ## Actualización  
   { Post_ID: "Post_6000" },  // filtro
   {
@@ -35,22 +36,21 @@ Buscar posts de TikTok
 { "Post_ID": "Post_6000" }
 
 ## Consultas con filtros y operadores
-Filtro por igualdad 
+
 { "Platform": "TikTok" }
 
-Filtro por mayor
+
 { "Views": { "$gt": 4900000 } }
 
-Filtro por menor 
+
 { "Likes": { "$lt": 50000 } }
 
-operadores 
 
-    {  Platform: "YouTube",
+ {  Platform: "YouTube",
        Region: "USA",
        likes: { $gt: 100000 }}
 
-Filtro Fecha
+
 {
   "Post_Date": {
     "$gte": { "$date": "2023-05-01T00:00:00Z" },
@@ -58,9 +58,26 @@ Filtro Fecha
   }
 }
 
-Operadores con regex
+
 {
   "Hashtag": { "$regex": "Challenge", "$options": "i" }
 }
 
+## Consultas de agregación para calcular estadísticas (contar, sumar, promediar, etc.).
+### Contar
+{
+      _id: "$Platform",
+      total_posts: { $sum: 1 }
+    }
 
+### Sumar 
+ {
+      _id: "$Content_Type",
+      total_views: { $sum: "$Views" }
+ }
+  
+### Promedio
+{
+      _id: "$Platform",
+      avg_likes: { $avg: "$Likes" }
+    }
